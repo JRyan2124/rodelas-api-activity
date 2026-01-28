@@ -20,7 +20,7 @@
 **4. Testing:**
 - (Paste a screenshot of a successful GET request here)
 
----![alt text](image.png)
+---![alt text](image-1.png)
 
 ## Quick Start
 
