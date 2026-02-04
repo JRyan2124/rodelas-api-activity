@@ -1,33 +1,25 @@
-// src/models/dishModel.js
-const dishes = [
-  {
-    id: 1,
-    name: 'Spicy Burger',
-    price: 12.99,
-    category: 'Lunch',
-    isVegetarian: false,
+const mongoose = require('mongoose');
+const dishSchema = new mongoose.Schema({
+    
+  name: {
+    type: String, // It must be text
+    required: true, // You MUST provide a name
+    unique: true, // No two dishes can have the same name
   },
-  {
-    id: 2,
-    name: 'Caesar Salad',
-    price: 8.5,
-    category: 'Starters',
-    isVegetarian: true,
+  price: {
+    type: Number, // It must be a number (10.99)
+    required: true,
   },
-  {
-    id: 3,
-    name: 'Chocolate Lava Cake',
-    price: 6.0,
-    category: 'Dessert',
-    isVegetarian: true,
+  category: {
+    type: String,
+    // Only these 4 words are allowed:
+    enum: ['Starters', 'Main', 'Dessert', 'Drinks'],
+    required: true,
   },
-  {
-    id: 4,
-    name: 'Grilled Salmon',
-    price: 18.0,
-    category: 'Dinner',
-    isVegetarian: false,
+  isVegetarian: {
+    type: Boolean, // True or False
+    default: false, // If you don't say, we assume it's NOT vegetarian
   },
-];
+});
 
-module.exports = dishes;
+module.exports = mongoose.model('Dish', dishSchema);
