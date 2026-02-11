@@ -22,39 +22,49 @@
 
 ---![alt text](image-1.png)
 
-## Quick Start
+# Database Design Explanation
 
-1) Install dependencies:
-```bash
-npm install
-```
+## Why did I choose to Embed the Review / Tag / Log?
 
-2) Create your `.env` file using the example:
-```bash
-copy .env.example .env
-```
+I chose to **embed** the Review, Tag, or Log because they are directly related to a specific main document and are not meant to exist independently.
 
-3) Run the server:
-```bash
-npm run dev
-```
+### Reasons:
 
-## Endpoints (BASE_URI=/api/v1)
+1. **Strong Relationship**
+   Reviews, tags, and logs are tightly connected to a specific item (e.g., hotel, dish, transaction). They do not need to exist on their own.
 
-- `GET /api/v1/transactions`
-  - Optional query: `type`, `minAmount`, `maxAmount`, `q`
-  - Example: `/api/v1/transactions?type=expense&minAmount=100&q=rent`
+2. **Faster Data Retrieval**
+   Since the data is embedded inside the main document, everything can be retrieved in a single query. This improves performance and reduces complexity.
 
-- `POST /api/v1/transactions`
-  - Body example:
-```json
-{
-  "description": "Load",
-  "amount": 50,
-  "type": "expense",
-  "date": "2023-10-11"
-}
-```
+3. **Small and Controlled Data**
+   These fields usually contain limited information and are not expected to grow excessively large.
 
-- `PUT /api/v1/transactions/:id`
-- `DELETE /api/v1/transactions/:id`
+4. **Simpler Structure**
+   Embedding avoids unnecessary collections and keeps the database design straightforward.
+
+**Summary:**  
+Embedding is best when the data is closely related, small in size, and always accessed together with the parent document.
+
+---
+
+## Why did I choose to Reference the Chef / User / Guest?
+
+I chose to **reference** the Chef, because they are independent entities that can exist separately from a single transaction or record.
+
+### Reasons:
+
+1. **Independent Entity**
+   A Chef, User, or Guest has their own complete information and can exist even without a specific booking or transaction.
+
+2. **Reusability**
+   - One User can create multiple transactions.
+   - One Chef can prepare multiple dishes.
+   - One Guest can make multiple bookings.
+
+3. **Avoid Data Duplication**
+   Referencing prevents repeating the same user or chef information in multiple documents. This makes updates easier and keeps the data consistent.
+
+4. **Scalability**
+   As the system grows, referencing allows better organization and management of large amounts of data.
+
+
