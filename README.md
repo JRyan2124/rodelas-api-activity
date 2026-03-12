@@ -68,3 +68,61 @@ I chose to **reference** the Chef, because they are independent entities that ca
    As the system grows, referencing allows better organization and management of large amounts of data.
 
 
+## Project Checklist
+
+- [/] Code runs via `npm run dev` with no errors.
+- [/] Registration and Login endpoints are functional.
+- [/] Middleware correctly blocks unauthorized users.
+- [/] GitHub Repo link submitted.
+- [/] README.md updated with answers to the required questions.
+
+---
+
+## README.md Questions
+
+### 1. Authentication vs Authorization
+
+**What is the difference between Authentication and Authorization in our code?**
+
+**Answer:**
+
+Authentication is the process of verifying the identity of a user. In our code, this happens when a user logs in using their email and password. The system checks if the credentials match the data stored in the database.
+
+Authorization, on the other hand, determines what the authenticated user is allowed to access. After logging in, a JSON Web Token (JWT) is generated and sent to the client. When the user tries to access a protected route, the middleware checks the token to confirm if the user has permission to access that resource.
+
+---
+
+### 2. Security (bcrypt)
+
+**Why did we use bcryptjs instead of saving passwords as plain text in MongoDB?**
+
+**Answer:**
+
+We use bcryptjs to hash passwords before saving them in the database. Hashing converts the password into a secure encrypted format that cannot easily be reversed.
+
+Saving passwords as plain text is dangerous because if the database is compromised, attackers would immediately see all user passwords. With bcryptjs, even if the database is leaked, the hashed passwords make it extremely difficult for attackers to recover the original passwords.
+
+---
+
+### 3. JWT Structure
+
+**What does the protect middleware do when it receives a JWT from the client?**
+
+**Answer:**
+
+The protect middleware checks if the request contains a valid JWT token in the authorization header. If a token is present, the middleware verifies it using the JWT secret key.
+
+If the token is valid, the middleware decodes the token to get the user information and allows the request to continue to the protected route. If the token is missing or invalid, the middleware blocks the request and returns an unauthorized access error.
+
+---
+
+## Technologies Used
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- bcryptjs
+- JSON Web Token (JWT)
+
+---
